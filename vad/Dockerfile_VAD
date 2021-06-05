@@ -1,0 +1,29 @@
+FROM python:3.6-stretch
+LABEL maintainer="Mark Baushenko m.baushenko@g.nsu.ru"
+
+ADD clean-layer.sh  /tmp/clean-layer.sh
+
+RUN apt-get update && \
+    apt-get install -y gcc && \
+    apt-get install -y make && \
+    apt-get install -y apt-transport-https && \
+    apt-get install -y ca-certificates && \
+    apt-get install -y build-essential && \
+    /tmp/clean-layer.sh
+
+RUN python3 --version
+RUN pip3 --version
+
+COPY ./vad.py /usr/src/vad/vad.py
+COPY ./flask_vad.py /usr/src/vad/flask_vad.py
+COPY ./requirements.txt /usr/src/vad/requirements.txt
+
+WORKDIR /usr/src/vad
+
+RUN pip3 install --upgrade pip && \
+    /tmp/clean-layer.sh
+
+RUN pip3 install --no-cache-dir -r requirements.txt && \
+    /tmp/clean-layer.sh
+
+CMD ["python3", "flask_vad.py"]

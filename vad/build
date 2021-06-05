@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+CACHE_FLAG='--no-cache'
+DOCKERFILE='Dockerfile_VAD'
+IMAGE_TAG='lapdimo/vad-build:0.1'
+
+readonly CACHE_FLAG
+readonly DOCKERFILE
+readonly IMAGE_TAG
+
+set -x
+docker build --rm --pull $CACHE_FLAG -t "$IMAGE_TAG" -f "$DOCKERFILE" .

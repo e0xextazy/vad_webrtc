@@ -1,0 +1,4 @@
+Flask==1.1.2
+webrtcvad==2.0.10
+requests==2.25.1
+Werkzeug==1.0.1
